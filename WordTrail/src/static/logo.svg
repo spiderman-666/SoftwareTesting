@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 定义渐变 -->
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="100%" style="stop-color:#FFA500" />
+    </linearGradient>
+    <!-- 剪切路径用于制作圆形标志 -->
+    <clipPath id="circleClip">
+      <circle cx="100" cy="100" r="90"/>
+    </clipPath>
+  </defs>
+
+  <!-- 主圆形背景 -->
+  <circle cx="100" cy="100" r="90" fill="url(#logoGradient)"/>
+  
+  <!-- 装饰性轨迹线 -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="4" opacity="0.9">
+    <path d="M40 100 Q100 40 160 100" />
+    <path d="M40 100 Q100 160 160 100" />
+  </g>
+
+  <!-- 点缀的小圆点，代表世界各地的连接点 -->
+  <circle cx="160" cy="100" r="6" fill="#FFFFFF"/>
+  <circle cx="40" cy="100" r="6" fill="#FFFFFF"/>
+  <circle cx="100" cy="40" r="6" fill="#FFFFFF"/>
+  <circle cx="100" cy="160" r="6" fill="#FFFFFF"/>
+
+  <!-- W字母造型，融入路径概念 -->
+  <path d="M70 70 L85 120 L100 70 L115 120 L130 70" 
+        fill="none" 
+        stroke="#FFFFFF" 
+        stroke-width="8" 
+        stroke-linecap="round"/>
+</svg>

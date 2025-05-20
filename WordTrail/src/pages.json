@@ -1,0 +1,153 @@
+{
+  "pages": [
+    {
+      "path": "pages/user/login",
+      "type": "home",
+      "layout": "login",
+      "style": {}
+    },
+    {
+      "path": "pages/home/home",
+      "type": "home",
+      "layout": "home",
+      "style": {}
+    },
+    {
+      "path": "pages/community/community",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/community/post",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/community/posteditor",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/learn/learnsettings",
+      "type": "page",
+      "layout": "home",
+      "style": {}
+    },
+    {
+      "path": "pages/lexicon/createuserlexicon",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/lexicon/lexicondetail",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/lexicon/userlexicondetail",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/findfriends",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/mychallengeinfo",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/myclockin",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/mycontent",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/mydata",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/myinfo",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/mylexicon",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/myuserlexicon",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/selectlexicon",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/user/settings",
+      "type": "page",
+      "style": {}
+    },
+    {
+      "path": "pages/user/totallearned",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/word/learn",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/word/review",
+      "type": "page",
+      "layout": "default",
+      "style": {}
+    },
+    {
+      "path": "pages/word/summary",
+      "type": "page",
+      "navigationBarTitleText": "AI 总结",
+      "navigationStyle": "default",
+      "style": {}
+    }
+  ],
+  "globalStyle": {
+    "backgroundColor": "@bgColor",
+    "backgroundColorBottom": "@bgColorBottom",
+    "backgroundColorTop": "@bgColorTop",
+    "backgroundTextStyle": "@bgTxtStyle",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTextStyle": "@navTxtStyle",
+    "navigationBarTitleText": "Vitesse-Uni",
+    "navigationStyle": "custom"
+  },
+  "subPackages": []
+}
