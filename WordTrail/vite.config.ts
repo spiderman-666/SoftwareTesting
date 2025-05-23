@@ -37,6 +37,11 @@ export default async () => {
       // see unocss.config.ts for config
       UnoCSS(),
     ],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      include: ['tests/**/*.test.ts', 'src/**/*.test.ts']
+    },
     // optimizeDeps: {
     //   include: ['@dcloudio/uni-ui'],
     // },
