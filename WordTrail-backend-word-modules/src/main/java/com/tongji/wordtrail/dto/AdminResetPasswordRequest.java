@@ -6,4 +6,7 @@ public class AdminResetPasswordRequest {
     private String account;
     private String key;
     private String newpassword;
+
+    public AdminResetPasswordRequest(String key123, String newpass) {
+    }
 }
