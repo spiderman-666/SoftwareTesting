@@ -369,6 +369,7 @@ export default defineComponent({
           :key="lang.name"
           class="flex cursor-pointer items-center rounded-lg p-3 transition-colors"
           :class="selectedLanguage.name === lang.name ? 'bg-yellow text-white' : 'bg-gray-100'"
+          :data-testid="`language-${lang.name}`"
           @click="handleSelectLanguage(lang)"
         >
           <text class="mr-2 text-lg">
@@ -385,7 +386,7 @@ export default defineComponent({
       当前词书：{{ currentLexicon?.name || '未选择' }}
     </text>
   </view>  <!-- Learn and Review Buttons -->  <view class="fixed bottom-20 left-5 right-5 flex justify-around">
-    <button class="mr-6 w-sm flex flex-col items-center justify-center py-2 frosted-glass" @click="handleLearnClick">
+    <button class="mr-6 w-sm flex flex-col items-center justify-center py-2 frosted-glass" data-testid="learn" @click="handleLearnClick">
       <span class="text-base">Learn</span>
       <span v-if="newWordsCount >= 0" class="text-base opacity-75">{{ newWordsCount }}</span>
     </button>

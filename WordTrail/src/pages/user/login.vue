@@ -307,6 +307,7 @@ export default defineComponent({
             v-model="account"
             :placeholder="currentTab === 'login' ? '请输入用户名' : '请设置用户名'"
             class="mb-5 border-2 border-yellow rounded border-dashed bg-transparent p-4 text-gray-600"
+            data-testid="username"
           >
 
           <!-- 邮箱输入框 - 只在注册时显示 -->
@@ -323,6 +324,7 @@ export default defineComponent({
             placeholder="请输入密码"
             :password="true"
             class="mb-5 border-2 border-yellow rounded border-dashed bg-transparent p-4 text-gray-600"
+            data-testid="password"
           >
 
           <!-- 注册时的确认密码框 -->
@@ -341,6 +343,7 @@ export default defineComponent({
             <checkbox
               value="1"
               :class="{ 'text-yellow': agreePrivacy }"
+              data-testid="checkbox"
             />
           </checkbox-group>
           <text :class="{ 'text-yellow': agreePrivacy, 'text-gray-600': !agreePrivacy }">
@@ -367,6 +370,7 @@ export default defineComponent({
         <view class="mt-10">
           <button
             class="mt-2.5 w-full rounded-full bg-yellow py-3 text-white font-bold transition-colors hover:bg-purple-300"
+            data-testid="login"
             @click="handleAction"
           >
             {{ currentTab === 'login' ? '登录' : '注册' }}

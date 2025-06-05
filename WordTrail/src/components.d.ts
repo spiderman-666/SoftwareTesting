@@ -16,7 +16,6 @@ declare module 'vue' {
     CommunityHeader: typeof import('./components/CommunityHeader.vue')['default']
     CustomInput: typeof import('./components/CustomInput.vue')['default']
     LexiconBox: typeof import('./components/LexiconBox.vue')['default']
-    OverviewContent: typeof import('./components/OverviewContent.vue')['default']
     PostCard: typeof import('./components/PostCard.vue')['default']
     PostHeader: typeof import('./components/PostHeader.vue')['default']
     TabBar: typeof import('./components/TabBar.vue')['default']

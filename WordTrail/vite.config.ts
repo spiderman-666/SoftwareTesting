@@ -4,8 +4,7 @@ import UniHelperLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniHelperPages from '@uni-helper/vite-plugin-uni-pages'
 import AutoImport from 'unplugin-auto-import/vite'
-import { defineConfig } from 'vite'
-
+import { defineConfig } from 'vitest/config'
 // https://vitejs.dev/config/
 export default async () => {
   const UnoCSS = (await import('unocss/vite')).default
@@ -37,6 +36,15 @@ export default async () => {
       // see unocss.config.ts for config
       UnoCSS(),
     ],
+    test: {
+      reporters: ['default', 'html'],
+      coverage: {
+        enabled: true,
+        provider: 'v8',
+        cleanOnRerun: true,
+        reporter: ['text', 'json', 'html'],
+      },
+    },
     // optimizeDeps: {
     //   include: ['@dcloudio/uni-ui'],
     // },
