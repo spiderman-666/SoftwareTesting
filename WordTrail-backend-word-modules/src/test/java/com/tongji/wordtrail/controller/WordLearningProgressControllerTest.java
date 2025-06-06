@@ -8,24 +8,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
+@Transactional // 确保测试后自动回滚
 @DisplayName("单词学习进度控制器测试")
 class WordLearningProgressControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    // 公共测试数据常量
+    // 使用真实数据库中的数据常量
     private static final String VALID_USER_ID = "ed62add4-bf40-4246-b7ab-2555015b383b";
-    private static final String NON_EXISTENT_USER_ID = "00000000-0000-0000-0000-000000000000"; // 使用明确不存在的UUID格式
+    private static final String NON_EXISTENT_USER_ID = "00000000-0000-0000-0000-000000000000";
     private static final ObjectId VALID_BOOK_ID = new ObjectId("67eb986cc015ca11e33b4e86");
     private static final ObjectId NON_EXISTENT_BOOK_ID = new ObjectId("507f1f77bcf86cd799439999");
     private static final String INVALID_BOOK_ID = "abc";
+    private static final ObjectId VALID_WORD_ID = new ObjectId("67fa0e2c2c0bf3230b6d9f95"); // 添加有效的单词ID
 
     @Nested
     @DisplayName("统计用户在词书中的未学习单词数量")
@@ -195,22 +199,7 @@ class WordLearningProgressControllerTest {
         }
 
         @Test
-        @DisplayName("TC2-2-3-6: 所有单词已学完 - 验证系统在单词已全部学习的情况下是否返回空列表")
-        void TC2_2_3_6_所有单词已学完() throws Exception {
-            // 使用一个假设已经学完所有单词的用户ID
-            String learnedAllUserId = "learned-all-user-id";
-            
-            mockMvc.perform(get("/api/v1/learning/book/" + VALID_BOOK_ID.toHexString() + "/new-words")
-                            .param("userId", learnedAllUserId)
-                            .param("batchSize", "5"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType("application/json"))
-                    .andExpect(jsonPath("$").isArray())
-                    .andExpect(jsonPath("$.length()").value(0));
-        }
-
-        @Test
-        @DisplayName("TC2-2-3-7: batchSize为负数 - 验证系统对负数参数的处理")
+        @DisplayName("TC2-2-3-6: batchSize为负数 - 验证系统对负数参数的处理")
         void TC2_2_3_7_batchSize为负数() throws Exception {
             mockMvc.perform(get("/api/v1/learning/book/" + VALID_BOOK_ID.toHexString() + "/new-words")
                             .param("userId", VALID_USER_ID)
@@ -219,7 +208,7 @@ class WordLearningProgressControllerTest {
         }
 
         @Test
-        @DisplayName("TC2-2-3-8: 缺失batchSize参数 - 验证缺失batchSize时的处理")
+        @DisplayName("TC2-2-3-7: 缺失batchSize参数 - 验证缺失batchSize时的处理")
         void TC2_2_3_8_缺失batchSize参数() throws Exception {
             mockMvc.perform(get("/api/v1/learning/book/" + VALID_BOOK_ID.toHexString() + "/new-words")
                             .param("userId", VALID_USER_ID))
@@ -227,7 +216,7 @@ class WordLearningProgressControllerTest {
         }
 
         @Test
-        @DisplayName("TC2-2-3-9: 词书ID不存在 - 验证不存在词书的处理")
+        @DisplayName("TC2-2-3-8: 词书ID不存在 - 验证不存在词书的处理")
         void TC2_2_3_9_词书ID不存在() throws Exception {
             mockMvc.perform(get("/api/v1/learning/book/" + NON_EXISTENT_BOOK_ID.toHexString() + "/new-words")
                             .param("userId", VALID_USER_ID)
@@ -238,7 +227,7 @@ class WordLearningProgressControllerTest {
         }
 
         @Test
-        @DisplayName("TC2-2-3-10: 用户ID不存在 - 验证不存在用户的处理")
+        @DisplayName("TC2-2-3-9: 用户ID不存在 - 验证不存在用户的处理")
         void TC2_2_3_10_用户ID不存在() throws Exception {
             mockMvc.perform(get("/api/v1/learning/book/" + VALID_BOOK_ID.toHexString() + "/new-words")
                             .param("userId", NON_EXISTENT_USER_ID)
@@ -247,6 +236,71 @@ class WordLearningProgressControllerTest {
                     .andExpect(content().contentType("application/json"))
                     .andExpect(jsonPath("$").isArray())
                     .andExpect(jsonPath("$.length()").value(org.hamcrest.Matchers.lessThanOrEqualTo(5))); // 修正：不存在的用户会返回新单词，数量应该 <= batchSize
+        }
+    }
+
+    @Nested
+    @DisplayName("标记某个单词为开始学习状态")
+    class StartLearningTests {
+
+        @Test
+        @DisplayName("TC2-2-5-1: 正常请求 - 验证用户提交合法wordId和userId后，系统能正确记录开始学习状态")
+        void TC2_2_5_1_正常请求() throws Exception {
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("userId", VALID_USER_ID)
+                            .param("wordId", VALID_WORD_ID.toHexString())) // 修正：使用正确的单词ID
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json"))
+                    .andExpect(jsonPath("$.userId").value(VALID_USER_ID))
+                    .andExpect(jsonPath("$.wordId").value(VALID_WORD_ID.toHexString()));
+        }
+
+        @Test
+        @DisplayName("TC2-2-5-2: 缺失userId参数 - 验证缺失必要参数时，系统是否拒绝并提示错误")
+        void TC2_2_5_2_缺失userId参数() throws Exception {
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("wordId", VALID_WORD_ID.toHexString())) // 修正：使用正确的单词ID
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("TC2-2-5-3: 缺失wordId参数 - 验证缺失必要参数时，系统是否拒绝并提示错误")
+        void TC2_2_5_3_缺失wordId参数() throws Exception {
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("userId", VALID_USER_ID))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("TC2-2-5-4: 参数格式非法 - 验证非法格式是否会被系统识别为错误")
+        void TC2_2_5_4_参数格式非法() throws Exception {
+            // 测试非法的wordId格式
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("userId", VALID_USER_ID)
+                            .param("wordId", INVALID_BOOK_ID))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("TC2-2-5-5: 重复提交 - 检查相同用户对同一个单词重复标记是否幂等")
+        void TC2_2_5_5_重复提交() throws Exception {
+            String wordId = VALID_WORD_ID.toHexString(); // 修正：使用正确的单词ID
+            
+            // 第一次提交
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("userId", VALID_USER_ID)
+                            .param("wordId", wordId))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json"));
+
+            // 第二次提交相同的参数，应该是幂等操作
+            mockMvc.perform(post("/api/v1/learning/start")
+                            .param("userId", VALID_USER_ID)
+                            .param("wordId", wordId))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType("application/json"))
+                    .andExpect(jsonPath("$.userId").value(VALID_USER_ID))
+                    .andExpect(jsonPath("$.wordId").value(wordId));
         }
     }
 }

@@ -31,8 +31,11 @@ public class AiSentenceService {
         this.deploymentName = deploymentName;
     }
     public String generateExampleSentence(String language, String word) {
-        // 构建提示词
-        String prompt = String.format("Generate an example sentence in %s using the word '%s'. Also provide its Simplified Chinese translation. Return the result in the format: '<example sentence>|<例句>' without any additional information.**Don't forget the delimiter '|'**", language, word);
+        // 构建温和提示词
+        String prompt = String.format(
+            "Please write an example sentence in %s using the word '%s', and also provide its Simplified Chinese translation. Separate the two parts with a '|'.",
+            language, word
+        );
 
         // 构建消息
         List<ChatRequestMessage> chatMessages = Arrays.asList(
@@ -62,16 +65,12 @@ public class AiSentenceService {
         return "Invalid response format.";
     }
 
-    // 修改 generateStory 方法中的��示词和正则表达式
+    // 修改 generateStory 方法中的提示词和正则表达式
     public String generateStory(String language, List<String> words) {
-        if (words == null || words.isEmpty() || words.size() > 10) {
-            throw new IllegalArgumentException("The word list must contain between 1 and 10 words.");
-        }
-
-        // 构建提示词
+        // 构建温和提示词
         String prompt = String.format(
-                "Write a short story in %s using the following words: %s. Then provide its Simplified Chinese translation. Strictly return the result in the format: '<story>|<故事的简体中文翻译>' without any additional information or explanation.**Don't forget the delimiter'|'**",
-                language, String.join(", ", words)
+            "Please write a short story in %s using the following words: %s. Then provide its Simplified Chinese translation. Separate the story and the translation with a '|'.",
+            language, String.join(", ", words)
         );
 
         // 构建消息
