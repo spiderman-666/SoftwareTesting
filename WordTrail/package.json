@@ -43,9 +43,7 @@
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "npx simple-git-hooks",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4020920240930001",
@@ -63,7 +61,6 @@
     "@dcloudio/uni-mp-xhs": "3.0.0-4020920240930001",
     "@dcloudio/uni-quickapp-webview": "3.0.0-4020920240930001",
     "@vueuse/core": "^11.2.0",
-    "cypress": "^14.4.1",
     "echarts": "^5.5.1",
     "uniapp-echarts": "^1.0.2",
     "vue-i18n": "^9.14.1",
@@ -100,7 +97,6 @@
     "@unocss/transformer-directives": "^0.64.1",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
-    "babel-plugin-istanbul": "^7.0.0",
     "eslint": "^9.14.0",
     "jsdom": "^26.1.0",
     "lint-staged": "^15.2.10",

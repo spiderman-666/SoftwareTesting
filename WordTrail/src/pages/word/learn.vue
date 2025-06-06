@@ -392,7 +392,6 @@ export default defineComponent({
             hasResponded ? 'cursor-not-allowed' : 'cursor-pointer',
           ]"
           hover-class="opacity-80"
-          data-testid="notknow"
           @click="handleDontKnow"
         >
           不认识
@@ -404,7 +403,6 @@ export default defineComponent({
             hasResponded ? 'cursor-not-allowed' : 'cursor-pointer',
           ]"
           hover-class="opacity-80"
-          data-testid="know"
           @click="handleKnow"
         >
           认识

@@ -4,7 +4,8 @@ import UniHelperLayouts from '@uni-helper/vite-plugin-uni-layouts'
 import UniHelperManifest from '@uni-helper/vite-plugin-uni-manifest'
 import UniHelperPages from '@uni-helper/vite-plugin-uni-pages'
 import AutoImport from 'unplugin-auto-import/vite'
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from 'vite'
+
 // https://vitejs.dev/config/
 export default async () => {
   const UnoCSS = (await import('unocss/vite')).default
@@ -39,14 +40,7 @@ export default async () => {
     test: {
       globals: true,
       environment: 'jsdom',
-      include: ['tests/**/*.test.ts', 'src/**/*.test.ts'],
-      reporters: ['default', 'html'],
-      coverage: {
-        enabled: true,
-        provider: 'v8',
-        cleanOnRerun: true,
-        reporter: ['text', 'json', 'html'],
-      },
+      include: ['tests/**/*.test.ts', 'src/**/*.test.ts']
     },
     // optimizeDeps: {
     //   include: ['@dcloudio/uni-ui'],
