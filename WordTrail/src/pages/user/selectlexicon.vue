@@ -504,6 +504,7 @@ export default defineComponent({
           :name="lexicon.bookName"
           :description="lexicon.description"
           :word-count="lexicon.wordCount"
+          data-testid="systembook"
           @click="handleSwitchLexicon(lexicon)"
         />
       </template>

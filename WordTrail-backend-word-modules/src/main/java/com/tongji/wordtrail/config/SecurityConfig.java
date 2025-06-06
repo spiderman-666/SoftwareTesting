@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 允许登录和注册接口匿名访问
                 .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
                 .antMatchers("/api/users/**").permitAll()
                 .antMatchers("/api/wordbooks/**").permitAll()
                 .antMatchers("/forum/**").permitAll()
